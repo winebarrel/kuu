@@ -13,7 +13,7 @@ var (
 )
 
 type Options struct {
-	Files []string `arg:"" optional:"" help:"TODO"`
+	Files []string `arg:"" optional:"" help:"Input files."`
 	kuu.Options
 }
 

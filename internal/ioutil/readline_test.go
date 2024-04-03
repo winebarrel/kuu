@@ -1,3 +1,4 @@
+//nolint:errcheck
 package ioutil_test
 
 import (
@@ -17,11 +18,11 @@ func TestReadLine(t *testing.T) {
 
 	f, _ := os.CreateTemp("", "")
 	defer os.Remove(f.Name())
-	f.WriteString("foo\n")  //nolint:errcheck
-	f.WriteString("bar\n")  //nolint:errcheck
-	f.WriteString("zoo\n")  //nolint:errcheck
-	f.Sync()                //nolint:errcheck
-	f.Seek(0, io.SeekStart) //nolint:errcheck
+	f.WriteString("foo\n")
+	f.WriteString("bar\n")
+	f.WriteString("zoo\n")
+	f.Sync()
+	f.Seek(0, io.SeekStart)
 
 	buf := bufio.NewReader(f)
 
@@ -38,11 +39,11 @@ func TestReadLine_WithoutTailNewLine(t *testing.T) {
 
 	f, _ := os.CreateTemp("", "")
 	defer os.Remove(f.Name())
-	f.WriteString("foo\n")  //nolint:errcheck
-	f.WriteString("bar\n")  //nolint:errcheck
-	f.WriteString("zoo")    //nolint:errcheck
-	f.Sync()                //nolint:errcheck
-	f.Seek(0, io.SeekStart) //nolint:errcheck
+	f.WriteString("foo\n")
+	f.WriteString("bar\n")
+	f.WriteString("zoo")
+	f.Sync()
+	f.Seek(0, io.SeekStart)
 
 	buf := bufio.NewReader(f)
 
@@ -69,11 +70,11 @@ func TestScanner(t *testing.T) {
 
 	f, _ := os.CreateTemp("", "")
 	defer os.Remove(f.Name())
-	f.WriteString("foo\n")  //nolint:errcheck
-	f.WriteString("bar\n")  //nolint:errcheck
-	f.WriteString("zoo\n")  //nolint:errcheck
-	f.Sync()                //nolint:errcheck
-	f.Seek(0, io.SeekStart) //nolint:errcheck
+	f.WriteString("foo\n")
+	f.WriteString("bar\n")
+	f.WriteString("zoo\n")
+	f.Sync()
+	f.Seek(0, io.SeekStart)
 
 	scanner := ioutil.NewScanner(f)
 
@@ -90,11 +91,11 @@ func TestScanner_WithoutTailNewLine(t *testing.T) {
 
 	f, _ := os.CreateTemp("", "")
 	defer os.Remove(f.Name())
-	f.WriteString("foo\n")  //nolint:errcheck
-	f.WriteString("bar\n")  //nolint:errcheck
-	f.WriteString("zoo")    //nolint:errcheck
-	f.Sync()                //nolint:errcheck
-	f.Seek(0, io.SeekStart) //nolint:errcheck
+	f.WriteString("foo\n")
+	f.WriteString("bar\n")
+	f.WriteString("zoo")
+	f.Sync()
+	f.Seek(0, io.SeekStart)
 
 	scanner := ioutil.NewScanner(f)
 

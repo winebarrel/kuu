@@ -1,0 +1,78 @@
+package kuu
+
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"strings"
+
+	"github.com/winebarrel/kuu/internal/ioutil"
+)
+
+type Options struct {
+	Inplace       bool   `kong:"short='i',xor='inplace,inplace-backup',help='TODO'"`
+	InplaceBackup string `kong:"short='b',xor='inplace,inplace-backup',help='TODO'"`
+}
+
+func Filter(files []string, options *Options) error {
+	if len(files) == 0 {
+		files = []string{""}
+	}
+
+	inplace := options.Inplace || options.InplaceBackup != ""
+
+	for _, fname := range files {
+		tf := NewTargetFile(fname, inplace, options.InplaceBackup)
+		err := FilterFile(tf)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func FilterFile(tf *TargetFile) error {
+	return tf.Filter(func(scanner *ioutil.Scanner, w io.Writer) error {
+		var buf strings.Builder
+		out := bufio.NewWriter(w)
+		defer out.Flush()
+		hasAny := false
+		prevEmpty := false
+
+		for {
+			line, err := scanner.Scan()
+
+			if err == io.EOF {
+				break
+			} else if err != nil {
+				return err
+			}
+
+			empty := line == ""
+			hasAny = hasAny || !empty
+
+			// Skip head empty lines
+			if !hasAny {
+				continue
+			}
+
+			// Skip duplicated empty lines
+			if empty && prevEmpty {
+				continue
+			}
+
+			fmt.Fprintln(&buf, line)
+
+			if !empty {
+				out.WriteString(buf.String()) //nolint:errcheck
+				buf.Reset()
+			}
+
+			prevEmpty = empty
+		}
+
+		return nil
+	})
+}

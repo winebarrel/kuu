@@ -26,6 +26,18 @@ Flags:
 ```
 
 ```sh
+$ echo -e "\n1\n2\n\n3\n"
+
+1
+2
+
+3
+
+$ echo -e "\n1\n2\n\n3\n" | ./kuu
+1
+2
+
+3
 $ (echo '---' ; cat london-bridge.txt ; echo '---') | nl -b a
      1	---
      2
@@ -40,7 +52,6 @@ $ (echo '---' ; cat london-bridge.txt ; echo '---') | nl -b a
     11
     12
     13	---
-
 $ kuu london-bridge.txt # or `cat london-bridge.txt | kuu`
 London Bridge is broken down,
 Broken down, broken down.
@@ -48,9 +59,7 @@ Broken down, broken down.
 London Bridge is broken down,
 
 My fair lady.
-
 $ kuu -i london-bridge.txt # when backing up `kuu -b.bak london-bridge.txt`
-
 $ (echo '---' ; cat london-bridge.txt ; echo '---') | nl -b a
      1	---
      2	London Bridge is broken down,

@@ -2,7 +2,6 @@
 package ioutil_test
 
 import (
-	"bufio"
 	"io"
 	"os"
 	"testing"
@@ -12,7 +11,7 @@ import (
 	"github.com/winebarrel/kuu/internal/ioutil"
 )
 
-func TestReadLine(t *testing.T) {
+func TestScanner(t *testing.T) {
 	assert := assert.New(t)
 	require := require.New(t)
 
@@ -24,16 +23,16 @@ func TestReadLine(t *testing.T) {
 	f.Sync()
 	f.Seek(0, io.SeekStart)
 
-	buf := bufio.NewReader(f)
+	scanner := ioutil.NewScanner(f)
 
 	for _, expected := range []string{"foo", "bar", "zoo"} {
-		line, err := ioutil.ReadLine(buf)
+		line, err := scanner.Scan()
 		require.NoError(err)
 		assert.Equal(expected, line)
 	}
 }
 
-func TestReadLine_WithoutTailNewLine(t *testing.T) {
+func TestScanner_WithoutTailNewLine(t *testing.T) {
 	assert := assert.New(t)
 	require := require.New(t)
 
@@ -45,21 +44,21 @@ func TestReadLine_WithoutTailNewLine(t *testing.T) {
 	f.Sync()
 	f.Seek(0, io.SeekStart)
 
-	buf := bufio.NewReader(f)
+	scanner := ioutil.NewScanner(f)
 
 	for _, expected := range []string{"foo", "bar", "zoo"} {
-		line, err := ioutil.ReadLine(buf)
+		line, err := scanner.Scan()
 		require.NoError(err)
 		assert.Equal(expected, line)
 	}
 }
 
-func TestReadLine_EmptyFile(t *testing.T) {
+func TestScanner_EmptyFile(t *testing.T) {
 	assert := assert.New(t)
 
 	f, _ := os.CreateTemp("", "")
-	buf := bufio.NewReader(f)
+	scanner := ioutil.NewScanner(f)
 
-	_, err := ioutil.ReadLine(buf)
+	_, err := scanner.Scan()
 	assert.Equal(io.EOF, err)
 }

@@ -3,7 +3,6 @@ package ioutil
 import (
 	"bufio"
 	"bytes"
-	"io"
 )
 
 func ReadLine(r *bufio.Reader) (string, error) {
@@ -21,20 +20,4 @@ func ReadLine(r *bufio.Reader) (string, error) {
 			return buf.String(), err
 		}
 	}
-}
-
-type Scanner struct {
-	buf bufio.Reader
-}
-
-func NewScanner(r io.Reader) *Scanner {
-	scanner := &Scanner{
-		buf: *bufio.NewReader(r),
-	}
-
-	return scanner
-}
-
-func (scanner *Scanner) Scan() (string, error) {
-	return ReadLine(&scanner.buf)
 }

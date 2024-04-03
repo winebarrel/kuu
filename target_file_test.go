@@ -155,3 +155,45 @@ func TestTargetFileFilter_InplaceBackup(t *testing.T) {
 	bak, _ := os.ReadFile(fin.Name() + ".bak")
 	assert.Equal("foo\nbar\nzoo\n", string(bak))
 }
+
+func TestTargetFileFilter_Stdin(t *testing.T) {
+	assert := assert.New(t)
+	require := require.New(t)
+
+	fin, _ := os.CreateTemp("", "")
+	defer os.Remove(fin.Name())
+	fin.WriteString("foo\n")
+	fin.WriteString("bar\n")
+	fin.WriteString("zoo\n")
+	fin.Sync()
+	fin.Seek(0, io.SeekStart)
+
+	origStdin := stdin
+	stdin = fin
+	t.Cleanup(func() { stdin = origStdin })
+
+	fout, _ := os.CreateTemp("", "")
+	defer os.Remove(fout.Name())
+	origStdout := stdout
+	stdout = fout
+	t.Cleanup(func() { stdout = origStdout })
+
+	tf := NewTargetFile("", false, "")
+
+	tf.Filter(func(scanner *ioutil.Scanner, w io.Writer) error {
+		for _, expected := range []string{"foo", "bar", "zoo"} {
+			line, err := scanner.Scan()
+			require.NoError(err)
+			assert.Equal(expected, line)
+		}
+
+		_, err := scanner.Scan()
+		assert.Equal(io.EOF, err)
+		fmt.Fprint(w, "aaa\nbbb\nccc\n")
+		return nil
+	})
+
+	fout.Seek(0, io.SeekStart)
+	out, _ := io.ReadAll(fout)
+	assert.Equal("aaa\nbbb\nccc\n", string(out))
+}

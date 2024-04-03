@@ -12,6 +12,7 @@ import (
 type Options struct {
 	Inplace       bool   `kong:"short='i',xor='inplace,inplace-backup',help='Edit files in place.'"`
 	InplaceBackup string `kong:"short='b',xor='inplace,inplace-backup',help='Edit files in place (makes backup with specified suffix).'"`
+	Unique        bool   `kong:"short='u',xor='inplace,inplace-backup',help='Make duplicate blank lines unique.'"`
 }
 
 func Filter(files []string, options *Options) error {
@@ -23,7 +24,7 @@ func Filter(files []string, options *Options) error {
 
 	for _, fname := range files {
 		tf := NewTargetFile(fname, inplace, options.InplaceBackup)
-		err := FilterFile(tf)
+		err := FilterFile(tf, options.Unique)
 
 		if err != nil {
 			return err
@@ -33,7 +34,7 @@ func Filter(files []string, options *Options) error {
 	return nil
 }
 
-func FilterFile(tf *TargetFile) error {
+func FilterFile(tf *TargetFile, unique bool) error {
 	return tf.Filter(func(scanner *ioutil.Scanner, w io.Writer) error {
 		var buf strings.Builder
 		out := bufio.NewWriter(w)
@@ -59,7 +60,7 @@ func FilterFile(tf *TargetFile) error {
 			}
 
 			// Skip duplicated empty lines
-			if empty && prevEmpty {
+			if unique && empty && prevEmpty {
 				continue
 			}
 

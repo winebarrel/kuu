@@ -36,6 +36,7 @@ baz
 
 	options := &Options{
 		Inplace: false,
+		Unique:  true,
 	}
 
 	fout, _ := os.CreateTemp("", "")

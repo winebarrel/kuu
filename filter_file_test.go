@@ -30,7 +30,7 @@ baz
 	fin.Sync()
 
 	tf := kuu.NewTargetFile(fin.Name(), true, "")
-	err := kuu.FilterFile(tf)
+	err := kuu.FilterFile(tf, true)
 	require.NoError(err)
 
 	out, _ := os.ReadFile(fin.Name())
@@ -62,7 +62,7 @@ baz
 	fin.Sync()
 
 	tf := kuu.NewTargetFile(fin.Name(), true, "")
-	err := kuu.FilterFile(tf)
+	err := kuu.FilterFile(tf, true)
 	require.NoError(err)
 
 	out, _ := os.ReadFile(fin.Name())
@@ -94,7 +94,7 @@ baz
 	fin.Sync()
 
 	tf := kuu.NewTargetFile(fin.Name(), true, "")
-	err := kuu.FilterFile(tf)
+	err := kuu.FilterFile(tf, true)
 	require.NoError(err)
 
 	out, _ := os.ReadFile(fin.Name())
@@ -125,7 +125,7 @@ baz`)
 	fin.Sync()
 
 	tf := kuu.NewTargetFile(fin.Name(), true, "")
-	err := kuu.FilterFile(tf)
+	err := kuu.FilterFile(tf, true)
 	require.NoError(err)
 
 	out, _ := os.ReadFile(fin.Name())
@@ -156,13 +156,48 @@ baz
 	fin.Sync()
 
 	tf := kuu.NewTargetFile(fin.Name(), true, "")
-	err := kuu.FilterFile(tf)
+	err := kuu.FilterFile(tf, true)
 	require.NoError(err)
 
 	out, _ := os.ReadFile(fin.Name())
 	assert.Equal(`foo
 bar
 zoo
+baz
+`, string(out))
+}
+
+func TestFilterFile_NotUnique(t *testing.T) {
+	assert := assert.New(t)
+	require := require.New(t)
+
+	fin, _ := os.CreateTemp("", "")
+	defer os.Remove(fin.Name())
+	fin.WriteString(`
+
+foo
+bar
+
+zoo
+
+
+baz
+
+
+`)
+	fin.Sync()
+
+	tf := kuu.NewTargetFile(fin.Name(), true, "")
+	err := kuu.FilterFile(tf, false)
+	require.NoError(err)
+
+	out, _ := os.ReadFile(fin.Name())
+	assert.Equal(`foo
+bar
+
+zoo
+
+
 baz
 `, string(out))
 }

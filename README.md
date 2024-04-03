@@ -27,18 +27,18 @@ Flags:
 ```
 
 ```sh
-$ echo -e "\n1\n2\n\n3\n"
+$ echo -e "\nfoo\nbar\n\nzoo\n"
 
-1
-2
+foo
+bar
 
-3
+zoo
 
-$ echo -e "\n1\n2\n\n3\n" | kuu
-1
-2
+$ echo -e "\nfoo\nbar\n\nzoo\n" | kuu
+foo
+bar
 
-3
+zoo
 $ cat london-bridge.txt | nl -ba
      1	
      2

@@ -89,7 +89,7 @@ $ cat london-bridge.txt | nl -ba
      9		My fair lady.
     10
 
-$ cat london-bridge.txt | ./kuu | nl -ba
+$ cat london-bridge.txt | kuu | nl -ba
      1		London Bridge is broken down,
      2		Broken down, broken down.
      3
@@ -98,7 +98,7 @@ $ cat london-bridge.txt | ./kuu | nl -ba
      6
      7		My fair lady.
 
-$ cat london-bridge.txt | ./kuu -u | nl -ba
+$ cat london-bridge.txt | kuu -u | nl -ba
      1		London Bridge is broken down,
      2		Broken down, broken down.
      3

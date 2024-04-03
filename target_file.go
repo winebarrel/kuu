@@ -53,7 +53,6 @@ func (tf *TargetFile) Filter(proc func(*ioutil.Scanner, io.Writer) error) error 
 
 	if !tf.Inplace {
 		return proc(scanner, stdout)
-
 	}
 
 	t, err := renameio.NewPendingFile(tf.Fname, renameio.WithExistingPermissions())

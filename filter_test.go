@@ -31,6 +31,7 @@ baz
 
 	options := &kuu.Options{
 		Inplace: true,
+		Unique:  true,
 	}
 
 	err := kuu.Filter([]string{fin.Name()}, options)
@@ -84,6 +85,7 @@ baz
 
 	options := &kuu.Options{
 		Inplace: true,
+		Unique:  true,
 	}
 
 	err := kuu.Filter([]string{fin1.Name(), fin2.Name()}, options)

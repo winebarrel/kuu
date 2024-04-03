@@ -10,8 +10,8 @@ import (
 )
 
 type Options struct {
-	Inplace       bool   `kong:"short='i',xor='inplace,inplace-backup',help='TODO'"`
-	InplaceBackup string `kong:"short='b',xor='inplace,inplace-backup',help='TODO'"`
+	Inplace       bool   `kong:"short='i',xor='inplace,inplace-backup',help='Edit files in place.'"`
+	InplaceBackup string `kong:"short='b',xor='inplace,inplace-backup',help='Edit files in place (makes backup with specified suffix).'"`
 }
 
 func Filter(files []string, options *Options) error {

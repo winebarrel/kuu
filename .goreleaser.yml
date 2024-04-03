@@ -14,7 +14,7 @@ archives:
       - goos: windows
         format: zip
 brews:
-  - tap:
+  - repository:
       owner: winebarrel
       name: homebrew-kuu
     homepage: https://github.com/winebarrel/kuu

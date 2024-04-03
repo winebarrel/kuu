@@ -52,14 +52,15 @@ $ cat london-bridge.txt | nl -ba
     10
     11
 
-$ kuu london-bridge.txt # or `cat london-bridge.txt | kuu`
-London Bridge is broken down,
-Broken down, broken down.
+$ kuu london-bridge.txt | nl -ba # or `cat london-bridge.txt | kuu`
+     1	London Bridge is broken down,
+     2	Broken down, broken down.
+     3
+     4	London Bridge is broken down,
+     5
+     6
+     7	My fair lady.
 
-London Bridge is broken down,
-
-
-My fair lady.
 $ kuu -i london-bridge.txt # when backing up `kuu -b.bak london-bridge.txt`
 
 $ cat london-bridge.txt | nl -ba
@@ -69,7 +70,7 @@ $ cat london-bridge.txt | nl -ba
      4	London Bridge is broken down,
      5
      6
-     6	My fair lady.
+     7	My fair lady.
 ```
 
 ### Make duplicate blank lines unique

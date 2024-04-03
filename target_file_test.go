@@ -194,7 +194,6 @@ func TestTargetFileFilter_Stdin(t *testing.T) {
 		return nil
 	})
 
-	fout.Seek(0, io.SeekStart)
-	out, _ := io.ReadAll(fout)
+	out, _ := os.ReadFile(fout.Name())
 	assert.Equal("aaa\nbbb\nccc\n", string(out))
 }

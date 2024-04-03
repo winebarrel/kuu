@@ -4,6 +4,12 @@
 
 Remove blank lines from the beginning and end of the file. Also, make duplicate blank lines into one.
 
+## Installation
+
+```sh
+brew install winebarrel/kuu/kuu
+```
+
 ## Usage
 
 ```

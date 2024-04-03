@@ -1,0 +1,24 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - main: ./cmd/kuu
+    ldflags:
+      - -X main.version={{.Version}}
+    env:
+      - CGO_ENABLED=0
+checksum:
+  name_template: "checksums.txt"
+archives:
+  - format_overrides:
+      - goos: windows
+        format: zip
+brews:
+  - tap:
+      owner: winebarrel
+      name: homebrew-kuu
+    homepage: https://github.com/winebarrel/kuu
+    description: Remove blank lines from the beginning and end of the file. Also, make duplicate blank lines into one.
+    license: MIT
+    install: |
+      bin.install 'kuu'

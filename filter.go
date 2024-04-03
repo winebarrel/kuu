@@ -12,7 +12,7 @@ import (
 type Options struct {
 	Inplace       bool   `kong:"short='i',xor='inplace,inplace-backup',help='Edit files in place.'"`
 	InplaceBackup string `kong:"short='b',xor='inplace,inplace-backup',help='Edit files in place (makes backup with specified suffix).'"`
-	Unique        bool   `kong:"short='u',xor='inplace,inplace-backup',help='Make duplicate blank lines unique.'"`
+	Unique        bool   `kong:"short='u',help='Make duplicate blank lines unique.'"`
 }
 
 func Filter(files []string, options *Options) error {

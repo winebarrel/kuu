@@ -154,6 +154,7 @@ func TestTargetFileFilter_InplaceBackup(t *testing.T) {
 
 	bak, _ := os.ReadFile(fin.Name() + ".bak")
 	assert.Equal("foo\nbar\nzoo\n", string(bak))
+	os.Remove(fin.Name() + ".bak")
 }
 
 func TestTargetFileFilter_Stdin(t *testing.T) {

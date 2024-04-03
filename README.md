@@ -76,6 +76,8 @@ $ (echo '---' ; cat london-bridge.txt ; echo '---') | nl -b a
 
 ### Make duplicate blank lines unique
 
+To make duplicate blank lines unique, use the `-u` option.
+
 ```sh
 $ cat london-bridge.txt | nl -ba
      1

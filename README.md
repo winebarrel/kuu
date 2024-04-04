@@ -39,6 +39,9 @@ foo
 bar
 
 zoo
+```
+
+```sh
 $ cat london-bridge.txt | nl -ba
      1	
      2

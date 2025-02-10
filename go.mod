@@ -3,7 +3,7 @@ module github.com/winebarrel/kuu
 go 1.22.1
 
 require (
-	github.com/alecthomas/kong v1.7.0
+	github.com/alecthomas/kong v1.8.0
 	github.com/google/renameio/v2 v2.0.0
 	github.com/otiai10/copy v1.14.1
 	github.com/stretchr/testify v1.10.0
